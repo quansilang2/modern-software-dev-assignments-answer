@@ -70,7 +70,26 @@ TOOL_REGISTRY: Dict[str, Callable[..., str]] = {
 # ==========================
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+
+You are a helpful assistant equipped with a specific tool.
+
+Tool Name: [output_every_func_return_type]
+Description: Analyzes Python source code to extract function return types.
+Arguments:
+  - file_path (string, optional): The path to the file to analyze.
+  
+  INSTRUCTIONS:
+1. When asked to use the tool, you must output a raw JSON object.
+2. Do NOT output any explanation, markdown formatting, or text outside the JSON.
+3. The JSON must follow this schema:
+   {
+     "tool": "[function name]",
+     "args": { ... }
+   }
+
+If the user asks to call the tool generally, you can leave the file_path argument empty or omit it.
+"""
 
 
 def resolve_path(p: str) -> str:
@@ -108,6 +127,10 @@ def run_model_for_tool_call(system_prompt: str) -> Dict[str, Any]:
         ],
         options={"temperature": 0.3},
     )
+    content = response.message.content
+    
+    #print(f"\n[DEBUG] Model Raw Output:\n{content}\n[DEBUG END]\n") 
+
     content = response.message.content
     return extract_tool_call(content)
 

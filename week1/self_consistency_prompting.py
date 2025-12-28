@@ -9,7 +9,14 @@ load_dotenv()
 NUM_RUNS_TIMES = 5
 
 # TODO: Fill this in! Try to get as close to 100% correctness across all runs as possible.
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """You are a logical reasoning assistant. Solve the word problem step-by-step.
+
+IMPORTANT:
+1. Break down the problem into logical steps.
+2. Show your calculation clearly.
+3. Verify your logic.
+4. Output the final answer on a new line strictly in this format: "Answer: <number>"
+"""
 
 USER_PROMPT = """
 Solve this problem, then give the final answer on the last line as "Answer: <number>".
