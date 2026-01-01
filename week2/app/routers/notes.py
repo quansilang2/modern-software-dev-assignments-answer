@@ -10,6 +10,19 @@ from .. import db
 router = APIRouter(prefix="/notes", tags=["notes"])
 
 
+@router.get("")
+def list_notes() -> List[Dict[str, Any]]:
+    rows = db.list_notes()
+    return [
+        {
+            "id": r["id"],
+            "content": r["content"],
+            "created_at": r["created_at"],
+        }
+        for r in rows
+    ]
+
+
 @router.post("")
 def create_note(payload: Dict[str, Any]) -> Dict[str, Any]:
     content = str(payload.get("content", "")).strip()
