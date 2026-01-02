@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "game-market-mcp"
+version = "0.1.0"
+description = "MCP server for Game Market Intelligence"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "game_market_mcp", from = "week3"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mcp = {extras = ["cli"], version = ">=0.1.0"}
+httpx = ">=0.27.0"
+uvicorn = ">=0.30.0"
+pydantic = ">=2.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.0.0"
+respx = ">=0.20.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
