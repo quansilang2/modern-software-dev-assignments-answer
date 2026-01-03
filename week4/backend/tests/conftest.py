@@ -36,4 +36,11 @@ def client() -> Generator[TestClient, None, None]:
     with TestClient(app) as c:
         yield c
 
-    os.unlink(db_path)
+    # Clean up
+    engine.dispose()
+    app.dependency_overrides.clear()
+    try:
+        os.unlink(db_path)
+    except (PermissionError, OSError):
+        # On Windows, the file may still be locked
+        pass
